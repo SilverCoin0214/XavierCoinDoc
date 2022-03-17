@@ -112,7 +112,7 @@ _starPlay(flag) {
 最终在文件里的代码则是
 ```dart
 import 'package:flutter/material.dart';
-import 'StringParser.dart';
+import 'string_parser.dart';
 
 void main() {
   runApp(MyApp());
@@ -199,4 +199,4 @@ class _MyHomePageState extends State<MyHomePage> {
 
 实现效果:
 
-![highlight](https://github.com/SilverCoin0214/XavierCoinDoc/blob/main/resolve/highLight.png)
+![highlight](https://hbimg.huabanimg.com/9dc77e5b466f3536241ff1baa633aed7707a94f2456b6-K9VoWm_fw658/format/webp)
