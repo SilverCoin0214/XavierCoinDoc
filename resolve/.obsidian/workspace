@@ -1,0 +1,106 @@
+{
+  "main": {
+    "id": "7f770c28c7949e00",
+    "type": "split",
+    "children": [
+      {
+        "id": "f97c2c3a79e44283",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "flutter文本滚动高亮效果.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "8eb7c5b3a60c9808",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "flutter文本滚动高亮效果.md",
+            "mode": "preview",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "6983e2e0c5c64fd6",
+    "type": "split",
+    "children": [
+      {
+        "id": "4f3d7c1ab23f3d9d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3b5ae6a422dbc730",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "5a23060d79f4566e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c738e7332146d942",
+    "type": "split",
+    "children": [
+      {
+        "id": "139376be00fc4b81",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e0e0a126c1c3f9bb",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "flutter文本滚动高亮效果.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "f97c2c3a79e44283",
+  "lastOpenFiles": [
+    "flutter文本滚动高亮效果.md"
+  ]
+}
