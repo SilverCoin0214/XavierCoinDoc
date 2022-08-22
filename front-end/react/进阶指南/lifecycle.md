@@ -1,0 +1,80 @@
+- 在组件实例上可以通过 `_reactInternals` 属性来访问组件对应的 fiber 对象。在 fiber 对象上，可以通过 `stateNode` 来访问当前 fiber 对应的组件实例。
+- React 的大部分生命周期的执行，都在 `mountClassInstance` 和`updateClassInstance` 这两个方法中执行
+### 初始化阶段
+1. **constructor 执行**
+	- 在 mount 阶段，首先执行的 constructClassInstance 函数
+	- 在实例化组件之后，会调用 mountClassInstance 函数初始化
+	  2. **getDerivedStateFromProps**
+	  3. **componentWillMount 执行**
+	- 如果存在 `getDerivedStateFromProps` 和 `getSnapshotBeforeUpdate` 就不会执行生命周期`componentWillMount`
+	  4. **render 函数执行**
+	  5. **componentDidMount执行**
+	  	1. 一旦 React 调和完所有的 fiber 节点，就会到 commit 阶段，在组件初始化 commit 阶段，会调用 `componentDidMount` 生命周期
+	  	2. `componentDidMount` 执行时机 和 `componentDidUpdate` 执行时机是相同的 ，只不过一个是针对初始化，一个是针对组件再更新
+	  
+	  ![[Pasted image 20220822155501.png]]
+### 更新阶段
+#### updateClassInstance函数内部执行
+1. **执行生命周期 componentWillReceiveProps**
+	- 首先判断 `getDerivedStateFromProps` 生命周期是否存在，如果不存在就执行`componentWillReceiveProps`生命周期。传入该生命周期两个参数，分别是 newProps 和 nextContext 。
+	  2. **执行生命周期 getDerivedStateFromProps**
+	- 返回的值用于合并state，生成新的state。
+	  3. **执行生命周期 shouldComponentUpdate**
+	  4. **执行生命周期 componentWillUpdate**
+#### 之后执行
+5. **执行 render 函数**
+6. **执行 getSnapshotBeforeUpdate**
+	1. `getSnapshotBeforeUpdate` 的执行也是在 commit 阶段，commit 阶段细分为 `before Mutation`( DOM 修改前)，`Mutation` ( DOM 修改)，`Layout`( DOM 修改后) 三个阶段，getSnapshotBeforeUpdate 发生在`before Mutation` 阶段，生命周期的返回值，将作为第三个参数 __reactInternalSnapshotBeforeUpdate 传递给 componentDidUpdate
+7. **执行 componentDidUpdate**
+
+![[Pasted image 20220822160549.png]]
+### 销毁阶段
+1. **执行生命周期 componentWillUnmount**
+	- 在一次调和更新中，如果发现元素被移除，就会打对应的 Deletion 标签 ，然后在 commit 阶段就会调用 `componentWillUnmount` 生命周期，接下来统一卸载组件以及 DOM 元素。
+	  ![[Pasted image 20220822160817.png]]
+## React 各阶段生命周期能做些什么
+#### 1 constructor
+- 初始化 state ，比如可以用来截取路由中的参数，赋值给 state 。
+- 对类组件的事件做一些处理，比如绑定 this ， 节流，防抖等。
+- 对类组件进行一些必要生命周期的劫持，渲染劫持，这个功能更适合反向继承的HOC ，在 HOC 环节，会详细讲解反向继承这种模式。
+#### 2 getDerivedStateFromProps(nextProps,prevState)
+- 在初始化和更新阶段，接受父组件的 props 数据， 可以对 props 进行格式化，过滤等操作，返回值将作为新的 state 合并到 state 中，供给视图渲染层消费
+- 只要组件更新，就会执行 `getDerivedStateFromProps`，不管是 props 改变，还是 setState ，或是 forceUpdate
+- 代替 componentWillMount 和 componentWillReceiveProps
+- 组件初始化或者更新时，将 props 映射到 state
+- 返回值与 state 合并完，可以作为 shouldComponentUpdate 第二个参数 newState ，可以判断是否渲染组件。
+#### 3 componentWillMount 和 UNSAFE_componentWillMount
+#### 4 componentWillReceiveProps 和 UNSAFE_componentWillReceiveProps
+#### 5 componentWillUpdate 和 UNSAFE_componentWillUpdate
+- React 已经出了新的生命周期 getSnapshotBeforeUpdate 来代替 UNSAFE_componentWillUpdate。
+#### 6 render
+- 所谓 render 函数，就是 jsx 的各个元素被 React.createElement 创建成 React element 对象的形式。一次 render 的过程，就是创建 React.element 元素的过程。
+#### 7 getSnapshotBeforeUpdate(prevProps,preState)
+- getSnapshotBeforeUpdate 这个生命周期意义就是配合componentDidUpdate 一起使用，计算形成一个 snapShot 传递给 componentDidUpdate 。保存一次更新前的信息。
+#### 8 componentDidUpdate(prevProps, prevState, snapshot)
+- componentDidUpdate 生命周期执行，此时 DOM 已经更新，可以直接获取 DOM 最新状态。这个函数里面如果想要使用 setState ，一定要加以限制，否则会引起无限循环。
+#### 9 componentDidMount
+- componentDidMount 生命周期执行时机和 componentDidUpdate 一样，一个是在**初始化**，一个是**组件更新**。
+#### 10 shouldComponentUpdate
+- 这个生命周期，一般用于性能优化，shouldComponentUpdate 返回值决定是否重新渲染的类组件。
+#### 11 componentWillUnmount
+- componentWillUnmount 是组件销毁阶段唯一执行的生命周期，主要做一些收尾工作，比如清除一些可能造成内存泄漏的定时器，延时器，或者是一些事件监听器。
+
+
+#  函数组件生命周期替代方案
+
+### 1 useEffect 和 useLayoutEffect
+**useEffect**
+- 对于 useEffect 执行， React 处理逻辑是采用异步调用 ，对于每一个 effect 的 callback， React 会向 `setTimeout`回调函数一样，放入任务队列，等到主线程任务完成，DOM 更新，js 执行完成，视图绘制完毕，才执行。所以 effect 回调函数不会阻塞浏览器绘制视图。
+
+
+**useLayoutEffect:**
+- useLayoutEffect 和 useEffect 不同的地方是采用了同步执行
+- 首先 useLayoutEffect 是在 DOM 更新之后，浏览器绘制之前，这样可以方便修改 DOM，获取 DOM 信息，这样浏览器只会绘制一次
+- useLayoutEffect callback 中代码执行会阻塞浏览器绘制。
+
+**一句话概括如何选择 useEffect 和 useLayoutEffect ：修改 DOM ，改变布局就用 useLayoutEffect ，其他情况就用 useEffect 。**
+
+### 2 useInsertionEffect
+- useInsertionEffect 的执行时机要比 useLayoutEffect 提前，useLayoutEffect 执行的时候 DOM 已经更新了，但是在 useInsertionEffect 的执行的时候，DOM 还没有更新。
+- 本质上 useInsertionEffect 主要是解决 CSS-in-JS 在渲染中注入样式的性能问题。这个 hooks 主要是应用于这个场景，在其他场景下 React 不期望用这个 hooks 。
