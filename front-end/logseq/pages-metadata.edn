@@ -3,37 +3,220 @@
   :block/updated-at 1661158362989}
  {:block/name "1/ jsx",
   :block/created-at 1661158362986,
-  :block/updated-at 1661158362986}
+  :block/updated-at 1664294382392}
+ {:block/name "1/ shouldcomponentupdate",
+  :block/created-at 1664294005250,
+  :block/updated-at 1664294005250}
+ {:block/name "1/ 包结构",
+  :block/created-at 1664294003617,
+  :block/updated-at 1664294003617}
+ {:block/name "1/ 模块规范",
+  :block/created-at 1664294005838,
+  :block/updated-at 1664294005838}
+ {:block/name "1/ 理念篇 - 瓶颈",
+  :block/created-at 1664294005288,
+  :block/updated-at 1664294005288}
+ {:block/name "10",
+  :block/created-at 1664294001112,
+  :block/updated-at 1664294001112}
+ {:block/name "10/ fiber树的构建 - update",
+  :block/created-at 1664294003694,
+  :block/updated-at 1664294003694}
+ {:block/name "10/ 实现篇 - concurrent mode",
+  :block/created-at 1664294005308,
+  :block/updated-at 1664294005308}
+ {:block/name "10/优化-渲染控制",
+  :block/created-at 1664294001109,
+  :block/updated-at 1664294001109}
+ {:block/name "11",
+  :block/created-at 1664294001763,
+  :block/updated-at 1664294001763}
+ {:block/name "11/ fiber树的渲染 - commit",
+  :block/created-at 1664294003849,
+  :block/updated-at 1664294003849}
+ {:block/name "11/ 优化-渲染调优",
+  :block/created-at 1664294001760,
+  :block/updated-at 1664294001760}
+ {:block/name "12",
+  :block/created-at 1664294001935,
+  :block/updated-at 1664294001935}
+ {:block/name "12/ 优化 - 海量数据",
+  :block/created-at 1664294001934,
+  :block/updated-at 1664294001934}
+ {:block/name "12/ 状态和副作用",
+  :block/created-at 1664294003943,
+  :block/updated-at 1664294003943}
+ {:block/name "13",
+  :block/created-at 1664294001993,
+  :block/updated-at 1664294001993}
+ {:block/name "13/ hook原理",
+  :block/created-at 1664294004059,
+  :block/updated-at 1664294004059}
+ {:block/name "13/ 原理 - 事件原理",
+  :block/created-at 1664294001991,
+  :block/updated-at 1664294001991}
+ {:block/name "14",
+  :block/created-at 1664294002245,
+  :block/updated-at 1664294002245}
+ {:block/name "14/ hook原理 (状态)",
+  :block/created-at 1664294004249,
+  :block/updated-at 1664294004249}
+ {:block/name "14/ 原理 - 调度与时间片",
+  :block/created-at 1664294002244,
+  :block/updated-at 1664294002244}
+ {:block/name "15",
+  :block/created-at 1664294002444,
+  :block/updated-at 1664294002444}
+ {:block/name "15/ hook原理 (副作用)",
+  :block/created-at 1664294004337,
+  :block/updated-at 1664294004337}
+ {:block/name "15/ 原理 - 调和与fiber",
+  :block/created-at 1664294002443,
+  :block/updated-at 1664294002443}
+ {:block/name "16",
+  :block/created-at 1664294002561,
+  :block/updated-at 1664294002561}
+ {:block/name "16/ context原理",
+  :block/created-at 1664294004485,
+  :block/updated-at 1664294004485}
+ {:block/name "16/原理 - hooks",
+  :block/created-at 1664294002560,
+  :block/updated-at 1664294002560}
+ {:block/name "17",
+  :block/created-at 1664294002728,
+  :block/updated-at 1664294002728}
+ {:block/name "17/ react 合成事件",
+  :block/created-at 1664294004549,
+  :block/updated-at 1664294004549}
+ {:block/name "17/ 原理 - beginwork和render流程",
+  :block/created-at 1664294002727,
+  :block/updated-at 1664294002727}
+ {:block/name "18",
+  :block/created-at 1664294002863,
+  :block/updated-at 1664294002863}
+ {:block/name "18/ 原理 - 更新流程",
+  :block/created-at 1664294002862,
+  :block/updated-at 1664294002862}
+ {:block/name "19",
+  :block/created-at 1664294003142,
+  :block/updated-at 1664294003142}
+ {:block/name "19/ 生态 - reactrouter",
+  :block/created-at 1664294003141,
+  :block/updated-at 1664294003141}
  {:block/name "2",
   :block/created-at 1661158363167,
   :block/updated-at 1661158363167}
+ {:block/name "2/ 优化方案",
+  :block/created-at 1664294005269,
+  :block/updated-at 1664294005269}
+ {:block/name "2/ 工作循环 workloop",
+  :block/created-at 1664294004605,
+  :block/updated-at 1664294004605}
+ {:block/name "2/ 理念篇 - 架构",
+  :block/created-at 1664294005331,
+  :block/updated-at 1664294005331}
  {:block/name "2/component",
   :block/created-at 1661158363165,
   :block/updated-at 1661158363165}
+ {:block/name "20",
+  :block/created-at 1664294003327,
+  :block/updated-at 1664294003327}
+ {:block/name "20/ react api",
+  :block/created-at 1664294003325,
+  :block/updated-at 1664294003325}
+ {:block/name "21",
+  :block/created-at 1664294003443,
+  :block/updated-at 1664294003443}
+ {:block/name "21/ react-hooks使用",
+  :block/created-at 1664294003442,
+  :block/updated-at 1664294003442}
+ {:block/name "22",
+  :block/created-at 1664294003465,
+  :block/updated-at 1664294003465}
+ {:block/name "22/ react-hooks自定义",
+  :block/created-at 1664294003465,
+  :block/updated-at 1664294003465}
  {:block/name "3",
   :block/created-at 1661158363301,
   :block/updated-at 1661158363301}
+ {:block/name "3/ 高频对象",
+  :block/created-at 1664294004668,
+  :block/updated-at 1664294004668}
  {:block/name "3/state",
   :block/created-at 1661158363300,
   :block/updated-at 1661158363300}
+ {:block/name "3/理念篇 - 文件结构",
+  :block/created-at 1664294005399,
+  :block/updated-at 1664294005399}
  {:block/name "4",
   :block/created-at 1661158363375,
   :block/updated-at 1661158363375}
+ {:block/name "4/ reconciler运作流程",
+  :block/created-at 1664294004775,
+  :block/updated-at 1664294004775}
+ {:block/name "4/ 理念篇 - jsx",
+  :block/created-at 1664294005423,
+  :block/updated-at 1664294005423}
  {:block/name "4/props",
   :block/created-at 1661158363374,
   :block/updated-at 1661158363374}
  {:block/name "5",
   :block/created-at 1661220602583,
   :block/updated-at 1661220602583}
+ {:block/name "5/ 启动过程",
+  :block/created-at 1664294004831,
+  :block/updated-at 1664294004831}
+ {:block/name "5/ 架构篇 - render阶段",
+  :block/created-at 1664294005447,
+  :block/updated-at 1664294005447}
  {:block/name "5/lifecycle",
   :block/created-at 1661220602578,
   :block/updated-at 1661220602578}
  {:block/name "6",
   :block/created-at 1661220603277,
   :block/updated-at 1661220603277}
+ {:block/name "6/ 优先级管理",
+  :block/created-at 1664294004949,
+  :block/updated-at 1664294004949}
  {:block/name "6/ref",
   :block/created-at 1661220603276,
   :block/updated-at 1661220603276}
+ {:block/name "6/架构篇 - commit阶段",
+  :block/created-at 1664294005485,
+  :block/updated-at 1664294005485}
+ {:block/name "7",
+  :block/created-at 1664294003505,
+  :block/updated-at 1664294003505}
+ {:block/name "7/ 实现篇 - diff",
+  :block/created-at 1664294005561,
+  :block/updated-at 1664294005561}
+ {:block/name "7/ 调度原理",
+  :block/created-at 1664294005023,
+  :block/updated-at 1664294005023}
+ {:block/name "7/context",
+  :block/created-at 1664294003504,
+  :block/updated-at 1664294003504}
+ {:block/name "8",
+  :block/created-at 1664294003569,
+  :block/updated-at 1664294003569}
+ {:block/name "8/ fiber树构造 - 基础",
+  :block/created-at 1664294005137,
+  :block/updated-at 1664294005137}
+ {:block/name "8/ 实现篇 - 状态更新",
+  :block/created-at 1664294005592,
+  :block/updated-at 1664294005592}
+ {:block/name "8/ 模块化css",
+  :block/created-at 1664294003568,
+  :block/updated-at 1664294003568}
+ {:block/name "9",
+  :block/created-at 1664294005195,
+  :block/updated-at 1664294005195}
+ {:block/name "9/ fiber树构建 - mount",
+  :block/created-at 1664294005194,
+  :block/updated-at 1664294005194}
+ {:block/name "9/ 实现篇 - hooks",
+  :block/created-at 1664294005661,
+  :block/updated-at 1664294005661}
  {:block/name "a",
   :block/created-at 1661158515280,
   :block/updated-at 1661158515280}
@@ -82,9 +265,9 @@
  {:block/name "later",
   :block/created-at 1661158515280,
   :block/updated-at 1661158515280}
- {:block/name "lifecycle",
-  :block/created-at 1661158363514,
-  :block/updated-at 1661158486200}
+ {:block/name "mailto:react@17.0.2",
+  :block/created-at 1664294005022,
+  :block/updated-at 1664294005022}
  {:block/name "now",
   :block/created-at 1661158515280,
   :block/updated-at 1661158515280}
@@ -97,6 +280,210 @@
  {:block/name "pasted image 20220822160817.png",
   :block/created-at 1661158363507,
   :block/updated-at 1661158363507}
+ {:block/name "pasted image 20220825112459.png",
+  :block/created-at 1664294002241,
+  :block/updated-at 1664294002241}
+ {:block/name "pasted image 20220825235845.png",
+  :block/created-at 1664294002441,
+  :block/updated-at 1664294002441}
+ {:block/name "pasted image 20220830150614.png",
+  :block/created-at 1664294002724,
+  :block/updated-at 1664294002724}
+ {:block/name "pasted image 20220830161423.png",
+  :block/created-at 1664294002725,
+  :block/updated-at 1664294002725}
+ {:block/name "pasted image 20220830163056.png",
+  :block/created-at 1664294002726,
+  :block/updated-at 1664294002726}
+ {:block/name "pasted image 20220830190147.png",
+  :block/created-at 1664294002856,
+  :block/updated-at 1664294002856}
+ {:block/name "pasted image 20220830192242.png",
+  :block/created-at 1664294002858,
+  :block/updated-at 1664294002858}
+ {:block/name "pasted image 20220830192744.png",
+  :block/created-at 1664294002859,
+  :block/updated-at 1664294002859}
+ {:block/name "pasted image 20220830192828.png",
+  :block/created-at 1664294002860,
+  :block/updated-at 1664294002860}
+ {:block/name "pasted image 20220831104153.png",
+  :block/created-at 1664294003132,
+  :block/updated-at 1664294003132}
+ {:block/name "pasted image 20220831114931.png",
+  :block/created-at 1664294003136,
+  :block/updated-at 1664294003136}
+ {:block/name "pasted image 20220907100145.png",
+  :block/created-at 1664294005445,
+  :block/updated-at 1664294005445}
+ {:block/name "pasted image 20220907101452.png",
+  :block/created-at 1664294005446,
+  :block/updated-at 1664294005446}
+ {:block/name "pasted image 20220907163425.png",
+  :block/created-at 1664294005559,
+  :block/updated-at 1664294005559}
+ {:block/name "pasted image 20220914203820.png",
+  :block/created-at 1664294005835,
+  :block/updated-at 1664294005835}
+ {:block/name "pasted image 20220914203951.png",
+  :block/created-at 1664294005836,
+  :block/updated-at 1664294005836}
+ {:block/name "pasted image 20220914204225.png",
+  :block/created-at 1664294005836,
+  :block/updated-at 1664294005836}
+ {:block/name "pasted image 20220915141654.png",
+  :block/created-at 1664294003617,
+  :block/updated-at 1664294003617}
+ {:block/name "pasted image 20220915162401.png",
+  :block/created-at 1664294004664,
+  :block/updated-at 1664294004664}
+ {:block/name "pasted image 20220915163128.png",
+  :block/created-at 1664294004665,
+  :block/updated-at 1664294004665}
+ {:block/name "pasted image 20220915163441.png",
+  :block/created-at 1664294004666,
+  :block/updated-at 1664294004666}
+ {:block/name "pasted image 20220915164137.png",
+  :block/created-at 1664294004778,
+  :block/updated-at 1664294004778}
+ {:block/name "pasted image 20220916001416.png",
+  :block/created-at 1664294004829,
+  :block/updated-at 1664294004829}
+ {:block/name "pasted image 20220916004930.png",
+  :block/created-at 1664294004831,
+  :block/updated-at 1664294004831}
+ {:block/name "pasted image 20220916005049.png",
+  :block/created-at 1664294004830,
+  :block/updated-at 1664294004830}
+ {:block/name "pasted image 20220916005057.png",
+  :block/created-at 1664294004830,
+  :block/updated-at 1664294004830}
+ {:block/name "pasted image 20220916100814.png",
+  :block/created-at 1664294004952,
+  :block/updated-at 1664294004952}
+ {:block/name "pasted image 20220916111939.png",
+  :block/created-at 1664294005018,
+  :block/updated-at 1664294005018}
+ {:block/name "pasted image 20220916143010.png",
+  :block/created-at 1664294005140,
+  :block/updated-at 1664294005140}
+ {:block/name "pasted image 20220916143423.png",
+  :block/created-at 1664294005134,
+  :block/updated-at 1664294005134}
+ {:block/name "pasted image 20220916151953.png",
+  :block/created-at 1664294005135,
+  :block/updated-at 1664294005135}
+ {:block/name "pasted image 20220916152019.png",
+  :block/created-at 1664294005136,
+  :block/updated-at 1664294005136}
+ {:block/name "pasted image 20220916165813.png",
+  :block/created-at 1664294005191,
+  :block/updated-at 1664294005191}
+ {:block/name "pasted image 20220916165950.png",
+  :block/created-at 1664294005191,
+  :block/updated-at 1664294005191}
+ {:block/name "pasted image 20220916170134.png",
+  :block/created-at 1664294005192,
+  :block/updated-at 1664294005192}
+ {:block/name "pasted image 20220916170909.png",
+  :block/created-at 1664294005192,
+  :block/updated-at 1664294005192}
+ {:block/name "pasted image 20220920113806.png",
+  :block/created-at 1664294003692,
+  :block/updated-at 1664294003692}
+ {:block/name "pasted image 20220920162246.png",
+  :block/created-at 1664294003846,
+  :block/updated-at 1664294003846}
+ {:block/name "pasted image 20220920162548.png",
+  :block/created-at 1664294003847,
+  :block/updated-at 1664294003847}
+ {:block/name "pasted image 20220920164940.png",
+  :block/created-at 1664294003848,
+  :block/updated-at 1664294003848}
+ {:block/name "pasted image 20220920235738.png",
+  :block/created-at 1664294004054,
+  :block/updated-at 1664294004054}
+ {:block/name "pasted image 20220921001411.png",
+  :block/created-at 1664294004055,
+  :block/updated-at 1664294004055}
+ {:block/name "pasted image 20220921001646.png",
+  :block/created-at 1664294004056,
+  :block/updated-at 1664294004056}
+ {:block/name "pasted image 20220921001736.png",
+  :block/created-at 1664294004056,
+  :block/updated-at 1664294004056}
+ {:block/name "pasted image 20220921001821.png",
+  :block/created-at 1664294004057,
+  :block/updated-at 1664294004057}
+ {:block/name "pasted image 20220921002235.png",
+  :block/created-at 1664294004058,
+  :block/updated-at 1664294004058}
+ {:block/name "pasted image 20220921002320.png",
+  :block/created-at 1664294004058,
+  :block/updated-at 1664294004058}
+ {:block/name "pasted image 20220921101645.png",
+  :block/created-at 1664294004243,
+  :block/updated-at 1664294004243}
+ {:block/name "pasted image 20220921105606.png",
+  :block/created-at 1664294004243,
+  :block/updated-at 1664294004243}
+ {:block/name "pasted image 20220921110336.png",
+  :block/created-at 1664294004244,
+  :block/updated-at 1664294004244}
+ {:block/name "pasted image 20220921110408.png",
+  :block/created-at 1664294004244,
+  :block/updated-at 1664294004244}
+ {:block/name "pasted image 20220921111823.png",
+  :block/created-at 1664294004245,
+  :block/updated-at 1664294004245}
+ {:block/name "pasted image 20220921111853.png",
+  :block/created-at 1664294004246,
+  :block/updated-at 1664294004246}
+ {:block/name "pasted image 20220921112018.png",
+  :block/created-at 1664294004247,
+  :block/updated-at 1664294004247}
+ {:block/name "pasted image 20220921112604.png",
+  :block/created-at 1664294004248,
+  :block/updated-at 1664294004248}
+ {:block/name "pasted image 20220921112627.png",
+  :block/created-at 1664294004248,
+  :block/updated-at 1664294004248}
+ {:block/name "pasted image 20220921115036.png",
+  :block/created-at 1664294004333,
+  :block/updated-at 1664294004333}
+ {:block/name "pasted image 20220921144838.png",
+  :block/created-at 1664294004335,
+  :block/updated-at 1664294004335}
+ {:block/name "pasted image 20220921145414.png",
+  :block/created-at 1664294004335,
+  :block/updated-at 1664294004335}
+ {:block/name "pasted image 20220921145642.png",
+  :block/created-at 1664294004336,
+  :block/updated-at 1664294004336}
+ {:block/name "pasted image 20220921154730.png",
+  :block/created-at 1664294004553,
+  :block/updated-at 1664294004553}
+ {:block/name "pasted image 20220921165125.png",
+  :block/created-at 1664294004548,
+  :block/updated-at 1664294004548}
+ {:block/name "pasted image 20220923142354.png",
+  :block/created-at 1664294003317,
+  :block/updated-at 1664294003317}
+ {:block/name "pasted image 20220923155733.png",
+  :block/created-at 1664294003319,
+  :block/updated-at 1664294003319}
+ {:block/name "pasted image 20220923170048.png",
+  :block/created-at 1664294003320,
+  :block/updated-at 1664294003320}
+ {:block/name "pasted image 20220925233114.png",
+  :block/created-at 1664294003322,
+  :block/updated-at 1664294003322}
+ {:block/name "sep 27th, 2022",
+  :block/created-at 1664293999940,
+  :block/updated-at 1664293999940}
+ {:block/name "sep 28th, 2022",
+  :block/created-at 1664294402101,
+  :block/updated-at 1664294402101}
  {:block/name "todo",
   :block/created-at 1661158515280,
   :block/updated-at 1661158515280}
