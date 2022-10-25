@@ -21,7 +21,7 @@
 
 ## 开始复习
 
-目前网络上关于执行上下文的内容, 存在着2版或者说3版的解释, 以ES3为主和以ES5为主, 同时ES2018又在ES5的基础上添加了一些内容. 因而打算全部都梳理一遍.
+目前网络上关于执行上下文的内容, 存在着2版或者说3版的解释, 以ES3为主和以ES6为主, 同时ES2018又在ES6的基础上添加了一些内容. 因而打算全部都梳理一遍.
 
 ### 1. ES3
 
@@ -29,7 +29,7 @@
 关于ES3中对于执行上下文所需要先了解的大致相关概念有:
 - 执行上下文栈(Execution Stack)
 - 变量对象(VO): 不同执行上下文中的VO不同, 全局执行上下文为全局对象(GO), 函数执行上下文为活动对象(AO)
-- 执行上下文分类:
+- 执行上下文场景:
 	- 全局执行上下文
 	- 函数执行上下文
 	- eval函数执行上下文(几乎不用)
@@ -78,8 +78,8 @@ foo()
 
 变量对象全部都存储在内存之中, 因而全局对象在代码没执行完毕之前, 永远会驻留在内存中. 
 
-##### 1.1.3 执行上下文的分类
-在JavaScript中, 有存在三种类型的执行上下文
+##### 1.1.3 执行上下文的场景
+在JavaScript中, 有以下几种类型的执行上下文
 
 - 全局执行下文 - 会在v8引擎遇到js代码时就创建, 并且一个程序中只会有一个全局执行上下文
 - 函数执行上下文 - 需要再代码执行函数被调用时, 才会为该函数创建一个函数执行上下文. 函数执行上下文可以有任意多个. 并且在调用完毕后会被销毁.
@@ -196,17 +196,18 @@ var activationObject = {
 而当函数执行完之后, 执行上下文栈就会把函数执行上下文给弹出栈. 函数执行上下文就会被销毁. 而AO对象则因为内存管理中如果有其他对象指向, 可能并不会被销毁, 从而导致了JS的闭包, 不过在此暂且不谈. 在无其他对象指向时, AO对象在内存中也一并被销毁.
 
 
-### 2. ES5
+### 2. ES6
 #### 2.1 预先知识
-对于ES5之后的执行上下文需要大致预先了解的相关知识有:
+对于ES6之后的执行上下文需要大致预先了解的相关知识有:
 - 执行上下文栈
 - 词法环境(lexical environment)
 - 变量环境(variable environment)
-- 执行上下文分类
+- 执行上下文场景
 - 执行上下文的阶段
 
-对于执行上下文栈和执行上下文的分类和阶段来说, 跟ES3并没有太大区别, 所以就不加以赘述.
-需要了解的新概念仅有词法环境和变量环境.  在ES5中去除了变量对象和作用域链的概念. 仅保留了this指向. 
+对于执行上下文栈和执行上下文的阶段来说, 跟ES3并没有太大区别, 所以就不加以赘述.
+执行上下文场景由`全局执行上下文`, `函数执行上下文`, 由增加了`块级执行上下文`. 
+还需要了解的新概念有词法环境和变量环境.  在ES6中去除了变量对象和作用域链的概念. 仅保留了this指向. 
 因而当前的执行上下文的三大属性变为了:
 - 词法环境
 - 变量环境
@@ -219,13 +220,14 @@ var activationObject = {
 - 外部环境引用(Reference to the outer environment): 可以理解为ES3里作用域链的作用
 
 环境记录存在有两种类型:
-- 声明式环境记录`(Declarative environment record)` : 用于存储变量和函数声明
-- 对象环境记录`(Object environment record)` : 除了存储变量和函数声明, 对象环境记录还存储了一个全局对象, 在浏览器中即为window对象. 对于每个绑定对象的属性, 环境记录都会创建一个新的条目.
+- 声明式环境记录`(Declarative environment record)` : 用于存储变量和函数声明, 例如`var/ const/ let/ class/ module/ import` `
+- 对象环境记录`(Object environment record)` : 除了存储变量和函数声明以及async, generator, 对象环境记录还存储了一个全局对象, 在浏览器中即为window对象. 对于每个绑定对象的属性, 环境记录都会创建一个新的条目. 
 tips: 对于函数代码来说, 环境记录还包含有 argument对象和参数长度length. 
 
-因而对于两种不同的环境来说:
+词法环境又存在有3中类型:
 - 在全局环境中, 环境记录是对象环境记录, 并且其不存在有外部环境引用, 指向的值为null
 - 在函数环境中, 环境记录是声明式环境记录, 其外部环境引用需要根据词法作用域来判断. 
+- 在模块环境中(仅node中): 环境记录是声明式环境记录, 其外部环境引用指向全局环境.
 
 以伪代码来说, 词法环境大致长为这样:
 ```js
@@ -282,7 +284,6 @@ GlobalExectionContext = {
 	LexicalEnvironment: {
 		EnvironmentRecord: {
 			Type: 'Object',
-			window: <Global Object>,
 			a: <uninitialized>,
 			b: <uninitialized>,
 			add: <func>
@@ -301,11 +302,189 @@ GlobalExectionContext = {
 
 ```
 
+#### 2.3 JavaScript执行阶段
+
+继续通过示例代码来解释:
+```js
+console.log(a)
+console.log(b)
+console.log(c)
+
+let a = 10
+const b = 20
+var c = 30
+
+function add(d, e) {
+	var f = 40
+	return d + e + f
+}
+
+c = add(50, 60)
+```
+
+当JavaScript真正开始逐行执行时, 首先碰到了前三行的输出语句. 此时全局执行上下文里的状态还是创建时的状态. 因而变量a和b在上下文中还是`uninitialized`, 这就是为什么let和const在声明之前会报错的原因. 而变量c存储在变量环境中同时创建时初始化赋值`undefined`.  这就是解释变量提升的最本质因素.
+
+函数则是在创建时就已经被放入内存中开辟的新空间中, 因而无论在何处调用. 都可以获取到内存中函数执行的函数体. 
+
+当代码运行到最后一行前, 此时的全局上下文的状态为:
+```js
+GlobalExectionContext = {
+
+	ThisBinding: <Global Object>,
+	
+	LexicalEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Object',
+			a: 10,
+			b: 20,
+			add: <func>
+		},
+		outer: <null>, 
+	},
+
+	VariableEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Object',
+			c: 30,
+		},
+		outer: <null>, 
+	}
+}
+```
+都以完成赋值操作, 之后进入函数add的调用, 此时v8引擎会创建一个新的函数执行上下文, 所以此时对于函数的执行上下文创建阶段的状态为:
+
+```js
+FunctionExectionContext = {
+
+	ThisBinding: <Global Object>,
+	
+	LexicalEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Declarative',
+			Arguments: {0: 50, 1: 60, length: 2}
+		},
+		outer: <GlobalLexicalEnvironment>, 
+	},
+
+	VariableEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Declarative',
+			f: undefined,
+		},
+		outer: <GlobalLexicalEnvironment>, 
+	}
+}
+```
+
+之后进入函数的执行阶段, 在执行阶段的过程中, 函数执行上下文的状态修改为:
+
+```js
+FunctionExectionContext = {
+
+	ThisBinding: <Global Object>,
+	
+	LexicalEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Declarative',
+			Arguments: {0: 50, 1: 60, length: 2}
+		},
+		outer: <GlobalLexicalEnvironment>, 
+	},
+
+	VariableEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Declarative',
+			f: 40,
+		},
+		outer: <GlobalLexicalEnvironment>, 
+	}
+}
+```
+
+最后执行完毕将值赋值给变量c, 因而全局执行上下文里变量环境中的c所引用的数据修改为150. 
+程序执行完毕.
 
 
+### 3. ES2018
+#### 1.1预先知识
+对于ES2018的执行上下文与ES5的对比来说, 最大的改变在于执行上下文中的内容增加了许多.
+
+在ES6中, 执行上下文的3个部分为:
+- 词法环境(lexical environment)
+- 变量环境(variable environment)
+- this指向(this value)
+
+在ES2018中, 执行上下文中的内容为:
+- 词法环境(lexical environment)
+- 变量环境(variable environment)
+- 代码恢复位置(code evaluation state)
+- 活动函数对象(Function)
+- 被执行的代码(ScriptOrModule)
+- 使用的基础库和内置对象实例(Realm)
+- 当前的生成器, 仅生成器上下文存在(Generator)
+
+在最新的ES2022中, 执行上下文又在ES2018基础上新增了一个私有环境(Private environment), 也是一种词法环境, 差别在于只包含class生成的私有变量, 如无则为null.
+
+对比ES5和ES2018中最大的区别会发现, 2018的this指向没有包含在内容中, 而是被整合到了词法环境中. 
+
+因而当前的词法环境从原来的两个部分变为三个部分:
+- 环境记录 (Environment Record)
+- 外部指向的引用 (Reference to the outer environment)
+- this绑定  (This binding)
+
+#### 2. 差异点
+##### 2.1 词法环境相关差异
+
+在上面的代码作为例子: 
+```js
+let a = 10
+const b = 20
+var c = 30
+
+function add(d, e) {
+	var f = 40
+	return d + e + f
+}
+
+c = add(50, 60)
+```
+
+如果是处于代码创建过程中, 那么此时的全局执行上下文的状态就变为:
+
+```js
+GlobalExectionContext = {
+	
+	LexicalEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Object',
+			a: <uninitialized>,
+			b: <uninitialized>,
+			add: <func>
+		},
+		outer: <null>, 
+		ThisBinding: <Global Object>,
+	},
+
+	VariableEnvironment: {
+		EnvironmentRecord: {
+			Type: 'Object',
+			c: undefined,
+		},
+		outer: <null>, 
+		ThisBinding: <Global Object>,
+	}
+}
+
+```
+
+ThisBinding会存放在词法环境和变量环境中, 而不是被单独处于执行上下文里. 
 
 
+## 总结
 
+基于ECMA对规范对于执行上下文不断的在完善, 所以随着时间的发展, 文中的内容多多少少会存在不少问题.  甚至可能现在其中都有些问题存在, 如有看到, 望恳指出.
+
+对于之类相对抽象的概念来说, 通过阅读他人的文章可能仅能做到理解, 最好的方式还是自己在学习完后再次输出, 将所记忆和理解到的内容通过自己的言语给复述成笔记或是思维导图. 那样可能会对知识又更深刻的理解. 
 
 
 
