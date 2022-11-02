@@ -22,19 +22,23 @@
 - 能用在哪？
 
 首先先回答闭包是什么这个问题。应该大多数人也看过很多与之相关的文章，很多人也给出了自己的解释，所以我也先给出自己理解的解释，那就是：
-- `闭包 = 一个函数 + 该函数所处的词法作用域`
-- 也就是`闭包是由一个函数并且该函数能够记住声明自己的词法作用域所产生的`。
+先有两个前置的概念：
+1. 闭包是在词法分析时就已经被确定的， 所以它会与词法作用域有关。
+2. 闭包存在的前置条件是需要支持函数作为一等公民的编程语言，所以它会与函数有关。
+所以最终的结论就是：
+- `闭包首先是一个结构体，这个结构体的组成部分为  一个函数 + 该函数所处的词法作用域`
+- 也就是`闭包是由一个函数并且该函数能够记住声明自己的词法作用域所产生的结构体`。
 - 在内存中理解就是， 当一个函数被调用时，`它所产生的函数执行上下文里的作用域链保存有其父词法作用域，所以父变量对象由于存在被引用而不会销毁，驻留在内存中供其使用`。这样的情况就称为闭包。
 
 上述的解释对于已经了解过闭包的人应该是一目了然的，但其实如果对于一个完全不知晓闭包的人来说，很可能是完全看不懂的。更甚至很多人其实仅仅只是记住了这种定义，而不是真的理解了这内涵。
 
-所以我想用一个不一定精准的类比去帮助理解什么是闭包这东西，想象你在掘金上写了一篇文章，并且引用到了掘金里其他作者的3篇文章作为参考。
+所以我想用一个不一定精准的类比去帮助理解什么是闭包这东西，想象你写了一篇文章放在自己的服务器上，并且引用了自己的3篇文章作为参考。那么此时 一篇文章 + 服务器的环境 就类似于闭包。
 
-在发表后被转载到其他的平台上，而其他平台上的读者点开你的文章阅读后想继续看你所引用的那些文章，依旧能准确无误的跳转到那些文章所在的位置（掘金网站里）。
+在发表到网络上后被转载到其他的平台上，而其他平台上的读者点开你的文章阅读后想继续看你所引用的那些文章，就被准确无误的跳转到了你服务器里的文章中去。
 
-在这个例子中， 所写的文章和写文章的这个环境（就是掘金这网站）就构成了闭包。  不论是在哪里读到文章，文章里所记得的参考文章引用指向永远是掘金平台里的。 
+在这个例子中，这篇文章保存了写这篇文章的服务器环境里的引用。  因而不论是在哪里读到文章，文章里所记得的参考文章引用指向永远是服务器里的地址。 这种情况叫做使用了闭包的特性。
 
-如果觉得还是不好理解，可以指出，我再思考有没更好的类比加以解释。
+可能例子还是不太好理解，毕竟它也没有很准确，闭包这概念就是有点抽象，没有想到现实中有什么具体的例子可以用来比喻。 如果有人想出更好的类比可以指出，我加以注释和描述。
 
 
 ## 为什么要设计出闭包？
@@ -61,9 +65,9 @@
 
 ```js
 for (var i = 0; i < 3; i++) {
-    setTimeout(function cb() {
-        console.log(i);
-    }, 1000);
+  setTimeout(function cb() {
+    console.log(i);
+  }, 1000);
 }
 ```
 
@@ -73,9 +77,9 @@ for (var i = 0; i < 3; i++) {
 
 ```js
 for (let i = 0; i < 3; i++) {
-    setTimeout(function cb() {
-        console.log(i);
-    }, 1000);
+  setTimeout(function cb() {
+    console.log(i);
+  }, 1000);
 }
 ```
 
@@ -89,26 +93,36 @@ for (let i = 0; i < 3; i++) {
 ### 1. 先来探讨变量i是var的情况。
 
 当代码开始执行时，此时执行上下文栈和内存里的情况是这样：
+其中全局对象里的`变量i`和全局执行上下文里变量环境里的`变量i`是同一个变量。
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202210271113279.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011040886.png)
 
 然后开始进行循环， 当 i = 0时，第一个定时器被丢入宏任务队列，关于宏任务相关的内容属于事件循环范畴，暂时只需要理解setTimeout会被丢入队列里，等之后执行。
+此时在堆内存中会创建它的回调函数cb，并且函数创建时会创建[[scope]]，在实际ECMA的规则中，[[scope]]会指向该函数的父作用域，也就是当前的全局对象（作用域是概念上的东西，实际体现在内存中就是保存数据的一种结构，可能是对象也可能是其他）。 
+但是在V8引擎的实现中，其实并不会指向全局对象，而是去分析该函数使用了父作用域中的哪些变量，将这些变量存储到Closure中，然后由scope指向。每个函数都有且只有一个Closure对象。
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202210271117683.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011055633.png)
+
+---
+
+这里先插入一下关于Closure对象可以在Chrome中哪看到的情况：
+可以看到，创建bar函数时，它只有引用了父作用域的name变量，所以在闭包对象中只会存储变量name, 而不会存在变量age。
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011107483.png)
+
+---
 
 同理之后的 i = 1, 和 i = 2 都是一样的，最终结果会变成：
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/Pasted%20image%2020221027112202.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011116460.png)
 
 最终因为 i++导致 i = 3， 循环结束，全局代码执行完毕。此时的结果为：
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/Pasted%20image%2020221027112452.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011121166.png)
 
 然后开始进入定时器回调函数执行的过程，
+开始执行第一个定时器里的回调函数，压入了执行上下文栈中，执行输出i, 但是在词法环境和变量环境中找不到这个变量i，所以去自身[[scope]]向上寻找，在Closure对象中找到了 i 等于3，输出结果3。
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/Pasted%20image%2020221027113207.png)
-
-开始执行第一个定时器里的回调函数，压入了执行上下文栈中，此时的变量对象是AO，执行输出i, 但是在活动对象AO中找不到这个变量，所以去自身作用域链的父作用域上寻找，也就是在GO中，找到了 i 等于3，输出结果3。
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011134120.png)
 
 同理对于后面两个定时器也是一样的流程，并且实际上定时器开启的时间都是在循环中就立即执行的，导致实际上三个函数的定时1秒时间是一致的，最终输出的结果是几乎同时输出3个3。而不是每间隔1秒后输出3， 当然这是定时器相关的知识了。
 
@@ -116,23 +130,23 @@ for (let i = 0; i < 3; i++) {
 
 同样是刚创建时，所展示的情况为：
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/Pasted%20image%2020221027113819.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011136064.png)
 
 之后进入循环体，当i = 0时： 
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202210271147284.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011149947.png)
 
 之后进入 i = 1时的情况： 
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202210271151693.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011151152.png)
 
 最后进入到 i = 2的情况，与 i = 1基本类似：
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202210271153595.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011153519.png)
 
 最终 i++，变成i值为3，循环结束。开启定时器工作：
 
-![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202210271213490.png)
+![](https://raw.githubusercontent.com/SilverCoin0214/XavierCoinPic/main/image/%08js/202211011159512.png)
 
 当执行第一个定时器的回调函数时，创建了函数执行上下文，此时执行输出语句i时，会先从自己的词法环境里寻找变量i的值，也就是在 record环境记录里搜索，但是不存在。因而通过自己外部环境引用outer找到原先创建的块级作用域里 i = 0的情况， 输出了i值为0的结果。  
 
@@ -140,7 +154,7 @@ for (let i = 0; i < 3; i++) {
 
 等到它们都执行完毕后，最终内存回收会将之全部都销毁。
 
-> 其实以上画的图并不是很严谨，因为在解释var的情况时我用到了ES3里执行上下文的概念， 到了下面用let时转成了ES5里词法环境的概念，同时又混杂了ES3的东西，但是对于理解闭包在内存里的情况还是不影响的。
+> 其实以上画的图并不是很严谨，与实际在内存中的表现肯定是有差异的，但是对于理解闭包在内存里的情况还是不影响的。
 
 
 ## 闭包能用在哪？
@@ -267,13 +281,10 @@ var moduleA = (function (global, doc) {
 
 ## 总结
 
-感觉这篇总结归纳的并没有很好，对于闭包还有一些涉及的内容没有提到。不过由于每次写的篇幅都有些过长，感觉能够看完都实属不易。如果其中有哪些概念是在阅读时没理解或者看不懂的，那一定是我写的还不够简洁易懂。
+感觉这篇总结归纳的还缺了不少，对于闭包还有一些涉及的内容没有提到。不过由于每次写的篇幅都有些过长，感觉能够看完都实属不易。如果其中有哪些概念是在阅读时没理解或者看不懂的，那一定是我写的还不够简洁易懂。
 
 以及在写完后我又看到了一篇关于讲解闭包内存泄露相关的文章：
 [一文颠覆大众对闭包的认知](https://mp.weixin.qq.com/s/ocB1ZklY-gPEOCajtaryhw)
+我觉得写的挺好的，请务必也阅读一下这篇文章。
 
-里面讲到了目前V8引擎发生了变化， 在为函数绑定词法作用域时，不会再将父函数的AO直接丢进[[scope]]中，而是会分析该函数使用了父函数的那些变量，将这些变量存储到一个叫做 `Closure`的对象里。每一个函数都有且只有一个 `Closure`对象。然后由它代替原来的父函数AO放入到[[scope]]中。 
-
-这样一来最上面相关图解就是有一定问题的，但因为相对来说不妨碍理解最终代码闭包的情况，所以我也就不修改了。
-
-请务必也阅读一下这篇文章。
+之后下一篇复习应该会选到内存管理与内存泄漏的问题。
