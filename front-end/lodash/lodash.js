@@ -17098,6 +17098,7 @@
       return _;
     });
   }
+
   // Check for `exports` after `define` in case a build optimizer adds it.
   else if (freeModule) {
     // Export for Node.js.
